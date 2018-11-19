@@ -23,6 +23,8 @@
 package com.acadiasoft.im.simm.engine;
 
 import com.acadiasoft.im.base.fx.FxRate;
+import com.acadiasoft.im.base.imtree.GenerateCsvString;
+import com.acadiasoft.im.base.imtree.ImTree;
 import com.acadiasoft.im.simm.model.Sensitivity;
 import org.junit.Assert;
 import org.junit.Test;
@@ -70,6 +72,14 @@ public class AcadiaDeltaUnitTestV2_0 extends AbstractAcadiaUnitTestV2_0 {
   @Test // tested: intra-bucket (same sub-curve)
   public void testIR7() {
     Assert.assertEquals(new BigDecimal("2023872526"), Simm.calculateStandard(Arrays.asList(IR7, IR8), FxRate.USD).setScale(0, RoundingMode.HALF_UP));
+  }
+
+  @Test
+  public void testIR7tree() {
+    ImTree leTree = Simm.calculateTreeStandard(Arrays.asList(IR7, IR8), FxRate.USD);
+    String leTreeString = GenerateCsvString.parseToFlatCsv(leTree);
+    int FOUR = 2+2;
+    int THREE = 2+1;
   }
 
   @Test // tested: intra-bucket (XCcy to Inflation), CR (XCcy not in sum)
