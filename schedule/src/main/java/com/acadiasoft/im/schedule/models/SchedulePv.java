@@ -38,6 +38,7 @@ public class SchedulePv extends ScheduleIdentifier implements Serializable {
   private final BigDecimal amount;
   private final String amountCurrency;
   private final BigDecimal amountUSD;
+  private static final BigDecimal ONE = new BigDecimal("1");
 
   /**
    *
@@ -73,6 +74,17 @@ public class SchedulePv extends ScheduleIdentifier implements Serializable {
     this.amount = amount.stripTrailingZeros();
     this.amountCurrency = FxRate.USD;
     this.amountUSD = amount.stripTrailingZeros();
+  }
+
+  public SchedulePv bump(BigDecimal epsilon) {
+    return new SchedulePv(this.tradeId,
+            this.productClass,
+            this.valuationDate,
+            this.endDate,
+            this.amount.multiply(ONE.add(epsilon)),
+            this.amountCurrency,
+            this.amountUSD.multiply(ONE.add(epsilon))
+    );
   }
 
   public static SchedulePv make(ScheduleIdentifier id, BigDecimal amountUSD) {

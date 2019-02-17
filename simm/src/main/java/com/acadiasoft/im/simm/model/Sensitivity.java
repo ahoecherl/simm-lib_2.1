@@ -147,6 +147,8 @@ public class Sensitivity implements Serializable, SensitivityIdentifier {
   // We store this as a seperate value as opposed to making a function call for use with CURVATURE type
   private final SensitivityClass sensitivityClass;
 
+  private static final BigDecimal ONE = new BigDecimal("1");
+
   /**
    *
    * @param productClass
@@ -302,6 +304,30 @@ public class Sensitivity implements Serializable, SensitivityIdentifier {
 
   public BigDecimal getAmountUsd() {
     return amountUsd;
+  }
+
+  public Sensitivity copy() {
+    return new Sensitivity(this.productClass,
+            this.riskType,
+            this.qualifier,
+            this.bucket,
+            this.label1,
+            this.label2,
+            this.amount,
+            this.amountCurrency,
+            this.amountUsd);
+  }
+
+  public Sensitivity bump(BigDecimal epsilon){
+    return new Sensitivity(this.productClass,
+            this.riskType,
+            this.qualifier,
+            this.bucket,
+            this.label1,
+            this.label2,
+            this.amount.multiply(ONE.add(epsilon)),
+            this.amountCurrency,
+            this.amountUsd.multiply(ONE.add(epsilon)));
   }
 
   @Override

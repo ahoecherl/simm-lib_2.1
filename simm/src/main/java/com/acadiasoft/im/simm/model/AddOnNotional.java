@@ -33,6 +33,7 @@ public class AddOnNotional implements Serializable {
   private final BigDecimal notional;
   private final String currency;
   private final BigDecimal notionalUSD;
+  private static final BigDecimal ONE = new BigDecimal("1");
 
   public AddOnNotional(String product, BigDecimal notional) {
     this.product = product;
@@ -60,6 +61,13 @@ public class AddOnNotional implements Serializable {
     this.notional = new BigDecimal(notional).stripTrailingZeros();
     this.notionalUSD = new BigDecimal(notionalUSD).stripTrailingZeros();
     this.currency = currency;
+  }
+
+  public AddOnNotional bump(BigDecimal epsilon){
+    return new AddOnNotional(this.product,
+            this.notional.multiply(ONE.add(epsilon)),
+            this.currency,
+            this.notionalUSD.multiply(ONE.add(epsilon)));
   }
 
   public String getProduct() {

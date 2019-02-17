@@ -28,10 +28,10 @@ import java.time.LocalDate;
 
 public class ScheduleIdentifier {
 
-  private final String tradeId;
-  private final ScheduleProductClass productClass;
-  private final LocalDate valuationDate;
-  private final LocalDate endDate;
+  public final String tradeId;
+  public final ScheduleProductClass productClass;
+  public final LocalDate valuationDate;
+  public final LocalDate endDate;
 
   public ScheduleIdentifier(String tradeId, ScheduleProductClass productClass, LocalDate valuationDate, LocalDate endDate) {
     this.tradeId = tradeId;
